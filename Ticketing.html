@@ -4,36 +4,58 @@
   </head>
   <body>
     <form method="post">
-      <label for="input-title">Title:</label> 
-      <input id="input-title" type="text" name="title"/>
-      <input type="submit" value="Submit"/>
+      <table>
+        <tr>
+          <td><label for="input-title">Title:</label></td>
+          <td><input id="input-title" type="text" name="title"/></td>
+        </tr>
+        <tr>
+          <td><label for="input-description">Description:</label></td>
+          <td><input id="input-description" type="text" name="title"/></td>
+        </tr>
+        <tr>
+          <td><input type="submit" value="Submit"/></td>
+          <td><input id="clear-button"type="button" value="Clear" onclick="clear()"/></td>
+        </tr>
+      </table>
     </form>
     <ul id="list-task">
     </ul>
     <script>
       var tasks;
-      tasks = localStorage["tasks"]===undefined?
-        []:JSON.parse(localStorage["tasks"]);
+      tasks = localStorage["tasks"]===undefined?[]:JSON.parse(localStorage["tasks"]);
       $(document).ready(
         function(){
           displayArrayAsList(tasks,"#list-task");
           $("#input-title").focus();
-        })
+        });
       $("form").submit(
         function(event){
           event.preventDefault();
-          tasks.push($("#input-title").val());
+          tasks.push(new Task($("#input-title").val(), $("#input-description").val()));
           localStorage.setItem("tasks",JSON.stringify(tasks));
-          $("#list-task").append('<li>'+$("#input-title").val()+'</li>');
+          $("#list-task").append('<li><input type="checkbox" id="'+tasks.length+'" onchange="toggleComplete()"/><label for="'
+            +tasks.length+'">'+$("#input-title").val()+'</lable></li>');
           return false;
-        })
+        });
+      $("#clear-button").click(function(){
+        localStorage.clear();
+        $("#list-task").empty();
+      });
+      function toggleComplete(){
+        
+      };
       function displayArrayAsList(array, listid){
         $(listid).empty();
         for(var i = 0; i<array.length;i++){
-          $(listid).append('<li>'+array[i]+'</li>');
+          $(listid).append('<li><input type="checkbox" id="'+i+'"/><label for="'
+            +i+'">'+array[i].title+'</label></li>');
         }
       }
-      fuction Task(title, description) {
+      function Task(title, description) {
+        this.title       = title;
+        this.description = description;
+        this.complete    = false;
       }
     </script>
   </body>
