@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <form method="post">
+      <label for="input-title">Title:</label> 
+      <input id="input-title" type="text" name="title"/>
+      <input type="submit" value="Submit"/>
+    </form>
+    <ul id="list-task">
+    </ul>
+    <script>
+      var tasks;
+      tasks = localStorage["tasks"]===undefined?
+        []:JSON.parse(localStorage["tasks"]);
+      $(document).ready(
+        function(){
+          displayArrayAsList(tasks,"#list-task");
+          $("#input-title").focus();
+        })
+      $("form").submit(
+        function(event){
+          event.preventDefault();
+          tasks.push($("#input-title").val());
+          localStorage.setItem("tasks",JSON.stringify(tasks));
+          $("#list-task").append('<li>'+$("#input-title").val()+'</li>');
+          return false;
+        })
+      function displayArrayAsList(array, listid){
+        $(listid).empty();
+        for(var i = 0; i<array.length;i++){
+          $(listid).append('<li>'+array[i]+'</li>');
+        }
+      }
+      fuction Task(title, description) {
+      }
+    </script>
+  </body>
+</html>
