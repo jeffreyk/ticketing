@@ -1,6 +1,14 @@
 <html>
   <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <style>
+      .ticket-description{
+        display: none;
+      }
+      .expandable{
+        cursor: default;
+      }
+    </style>
   </head>
   <body>
     <form method="post">
@@ -28,14 +36,17 @@
         function(){
           displayArrayAsList(tasks,"#list-task");
           $("#input-title").focus();
+          $(document).on("click", ".expandable", function(event){
+            $(event.target).siblings().find(".ticket-description").toggle();
+          });
         });
       $("form").submit(
         function(event){
           event.preventDefault();
           tasks.push(new Task($("#input-title").val(), $("#input-description").val()));
           localStorage.setItem("tasks",JSON.stringify(tasks));
-          $("#list-task").append('<li><input type="checkbox" id="'+tasks.length+'" onchange="toggleComplete()"/><label for="'
-            +tasks.length+'">'+$("#input-title").val()+'</lable></li>');
+          $("#list-task").append('<li><span class="expandable">+</span><input type="checkbox" id="'+tasks.length+'" onchange="toggleComplete()"/><label for="'
+          +tasks.length+'">'+$("#input-title").val()+'</lable><div class="ticket-description">'+$('#input-description').val()+'</div></li>');
           return false;
         });
       $("#clear-button").click(function(){
