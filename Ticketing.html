@@ -37,7 +37,7 @@
           displayArrayAsList(tasks,"#list-task");
           $("#input-title").focus();
           $(document).on("click", ".expandable", function(event){
-            $(event.target).siblings().find(".ticket-description").toggle();
+            $(event.target).siblings(".ticket-description").toggle();
           });
         });
       $("form").submit(
@@ -45,12 +45,12 @@
           event.preventDefault();
           tasks.push(new Task($("#input-title").val(), $("#input-description").val()));
           localStorage.setItem("tasks",JSON.stringify(tasks));
-          $("#list-task").append('<li><span class="expandable">+</span><input type="checkbox" id="'+tasks.length+'" onchange="toggleComplete()"/><label for="'
-          +tasks.length+'">'+$("#input-title").val()+'</lable><div class="ticket-description">'+$('#input-description').val()+'</div></li>');
+          displayArrayAsList(tasks, "#list-task");
           return false;
         });
       $("#clear-button").click(function(){
         localStorage.clear();
+        tasks = [];
         $("#list-task").empty();
       });
       function toggleComplete(){
@@ -59,8 +59,15 @@
       function displayArrayAsList(array, listid){
         $(listid).empty();
         for(var i = 0; i<array.length;i++){
-          $(listid).append('<li><input type="checkbox" id="'+i+'"/><label for="'
-            +i+'">'+array[i].title+'</label></li>');
+          $(listid).append([
+          '<li>',
+              '<span class="expandable">+</span>',
+              //'<input type="checkbox" id="'+i+'"/>',
+              '<label for="' +i+'">'+array[i].title+'</label>',
+              '<div class="ticket-description">',
+                  array[i].description,
+              '</div>',
+          '</li>'].join(''));
         }
       }
       function Task(title, description) {
