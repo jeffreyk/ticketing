@@ -48,6 +48,10 @@
           $(document).on("click", ".expandable", function(event){
             $(event.target).siblings(".ticket-description").toggle();
           });
+          $(document).on("click", ".checkbox", function(event){
+            tasks[this.id].complete = this.checked?true:false;
+            localStorage.setItem("tasks",JSON.stringify(tasks));
+          });
         });
       $("form").submit(
         function(event){
@@ -67,6 +71,8 @@
         for(var i = 0; i<array.length;i++){
           $(listid).append([
           '<li>',
+              array[i].complete?
+              '<input class="checkbox" type="checkbox" id="'+i+'" checked/>':
               '<input class="checkbox" type="checkbox" id="'+i+'"/>',
               array[i].description?
               '<span class="expandable">+</span>':'<span class="notExpandable"/>',
