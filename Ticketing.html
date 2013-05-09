@@ -3,10 +3,19 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <style>
       .ticket-description{
-        display: none;
+        display     : none;
+        padding-left: 40px;
       }
       .expandable{
-        cursor: default;
+        cursor       : default;
+        padding-left : 10px;
+        padding-right: 5px;
+      }
+      .notExpandable{
+        padding-left : 24px;
+      }
+      ul{
+        list-style-type: none;
       }
     </style>
   </head>
@@ -23,7 +32,7 @@
         </tr>
         <tr>
           <td><input type="submit" value="Submit"/></td>
-          <td><input id="clear-button"type="button" value="Clear" onclick="clear()"/></td>
+          <td><input id="clear-button"type="button" value="Clear"/></td>
         </tr>
       </table>
     </form>
@@ -53,28 +62,26 @@
         tasks = [];
         $("#list-task").empty();
       });
-      function toggleComplete(){
-        
-      };
       function displayArrayAsList(array, listid){
         $(listid).empty();
         for(var i = 0; i<array.length;i++){
           $(listid).append([
           '<li>',
-              '<span class="expandable">+</span>',
-              //'<input type="checkbox" id="'+i+'"/>',
+              '<input class="checkbox" type="checkbox" id="'+i+'"/>',
+              array[i].description?
+              '<span class="expandable">+</span>':'<span class="notExpandable"/>',
               '<label for="' +i+'">'+array[i].title+'</label>',
               '<div class="ticket-description">',
                   array[i].description,
               '</div>',
           '</li>'].join(''));
         }
-      }
+      };
       function Task(title, description) {
         this.title       = title;
         this.description = description;
         this.complete    = false;
-      }
+      };
     </script>
   </body>
 </html>
