@@ -1,15 +1,17 @@
 var tasks;
 
-tasks = localStorage["tasks"]===undefined?[]:JSON.parse(localStorage["tasks"]);
+tasks = localStorage["tasks"] === undefined ? [] : JSON.parse(localStorage["tasks"]);
 
 $(document).ready(
   function(){
     displayArrayAsList(tasks,"#list-task");
     $("#input-title").focus();
+
     $(document).on("click", ".expandable", function(event){
       $(event.target).siblings(".ticket-description").toggle();
-      $(event.target).text($(event.target).text()==="+" ? "-" : "+");
+      $(event.target).text($(event.target).text() === "+" ? "-" : "+");
     });
+
     $(document).on("click", ".checkbox", function(event){
       tasks[this.id].complete = this.checked ? true : false;
       localStorage.setItem("tasks",JSON.stringify(tasks));
@@ -31,17 +33,33 @@ $("#clear-button").click(function(){
   $("#list-task").empty();
 });
 
+$("#remove-completed-button").click(function(){
+  var tasksToRemove = [];
+  for(var i = 0; i < tasks.length; i++){
+    if(tasks[i].complete){
+      tasksToRemove.push(i);
+    }
+  }
+
+  for(var i = tasksToRemove.length - 1; i >= 0; i--){
+    tasks.splice(tasksToRemove[i], 1)
+  }
+
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+  displayArrayAsList(tasks, "#list-task");
+});
+
 function displayArrayAsList(array, listid){
   $(listid).empty();
-  for(var i = 0; i<array.length;i++){
+  for(var i = 0; i<array.length; i++){
     $(listid).append([
     '<li>',
         array[i].complete?
-        '<input class="checkbox" type="checkbox" id="'+i+'" checked/>':
-        '<input class="checkbox" type="checkbox" id="'+i+'"/>',
+        '<input class="checkbox" type="checkbox" id="' + i + '" checked/>':
+        '<input class="checkbox" type="checkbox" id="' + i + '"/>',
         array[i].description?
         '<span class="expandable">+</span>':'<span class="notExpandable"/>',
-        '<label for="' +i+'">'+array[i].title+'</label>',
+        '<label for="' + i + '">' + array[i].title + '</label>',
         '<div class="ticket-description">',
             array[i].description,
         '</div>',
