@@ -8,9 +8,10 @@ $(document).ready(
     $("#input-title").focus();
     $(document).on("click", ".expandable", function(event){
       $(event.target).siblings(".ticket-description").toggle();
+      $(event.target).text($(event.target).text()==="+" ? "-" : "+");
     });
     $(document).on("click", ".checkbox", function(event){
-      tasks[this.id].complete = this.checked?true:false;
+      tasks[this.id].complete = this.checked ? true : false;
       localStorage.setItem("tasks",JSON.stringify(tasks));
     });
 });
