@@ -1,0 +1,15 @@
+.ticket-description{
+  display     : none;
+  padding-left: 40px;
+}
+.expandable{
+  cursor       : default;
+  padding-left : 10px;
+  padding-right: 5px;
+}
+.notExpandable{
+  padding-left : 24px;
+}
+ul{
+  list-style-type: none;
+}
