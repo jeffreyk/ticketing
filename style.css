@@ -1,11 +1,12 @@
 .ticket-description{
   display     : none;
-  padding-left: 40px;
+  padding-left: 41px;
 }
 .expandable{
   cursor       : default;
-  padding-left : 10px;
+  padding-left : 9px;
   padding-right: 5px;
+  font-family  : "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
 }
 .notExpandable{
   padding-left : 24px;
